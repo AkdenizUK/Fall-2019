@@ -1,0 +1,13 @@
+- name: Install FTP package on RHEL
+      yum:
+        name: vsftpd
+        state: present
+      when: ansible_distribution == "RedHat"
+
+# Modify FTP server configuration to allow Anonymous access.
+  - block:
+    - name: Create home dir for anonymous user if it does not exists
+      file:
+        path: /var/ftp/pub
+        state: directory
+        mode: 0755
